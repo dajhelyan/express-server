@@ -1,5 +1,5 @@
-import dbConection from "../config/mongo-db"
-const apiRoutes = require('../routes/orders')
+import dbConection from "./config/mongo-db"
+const apiRoutes = require('./routes/orders')
 import bodyParser from 'body-parser'
 // import cors from 'cors'
 const express = require('express')
