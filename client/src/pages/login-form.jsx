@@ -1,9 +1,10 @@
-import Container from '@mui/material'
+import {Container} from '@mui/material/'
+import { Form } from '../components/form-component'
 
-export const OrderForm = () => {
+export const LoginForm = () => {
   return (
     <Container>
-
+      <Form/>
     </Container>
   )
 }
