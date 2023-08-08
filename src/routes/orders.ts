@@ -10,9 +10,12 @@ router.post("/order", addOrder)
 router.get("/orders", getOrders)
 
 // Login routes
+
+// http:localhost:3000/register [POST]
 router.post("/register", register)
 
-
+// http:localhost:3000/login [POST]
+router.post("/login")
 
 module.exports = router
 

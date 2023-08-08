@@ -1,8 +1,8 @@
 import { Response } from "express";
 
 
-export function errorHandler(res:Response, error: string) {
+export function errorHandler(res:Response, error: any) {
   return res.status(500)
-  .send(error)
+  .send(`${error}`)
 }
 
