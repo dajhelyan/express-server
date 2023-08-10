@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { addOrder, getOrders } from '../controller/order';
-import { register } from '../controller/user';
+import { logIn, register } from '../controller/user';
 const router = Router()
 
 // http:localhost:3000/order [POST]
@@ -15,7 +15,7 @@ router.get("/orders", getOrders)
 router.post("/register", register)
 
 // http:localhost:3000/login [POST]
-router.post("/login")
+router.post("/login", logIn)
 
 module.exports = router
 
