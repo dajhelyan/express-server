@@ -1,13 +1,15 @@
 import { Router } from 'express'
 import { addOrder, getOrders } from '../controller/order';
 import { logIn, register } from '../controller/user';
+import { authMiddleware } from '../utils/auth.middleware';
+// const authMiddleware = require('../utils/auth.middleware')
 const router = Router()
 
 // http:localhost:3000/order [POST]
-router.post("/order", addOrder)
+router.post("/order", authMiddleware, addOrder)
 
 // http:localhost:3000/orders [GET]
-router.get("/orders", getOrders)
+router.get("/orders", authMiddleware, getOrders)
 
 // Login routes
 
