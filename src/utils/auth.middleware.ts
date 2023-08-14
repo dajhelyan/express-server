@@ -1,20 +1,20 @@
-import { Request, Response } from 'express';
-// const express = require('express');
-import jwt from 'jsonwebtoken';
-// import { decodeToken } from '../services/user-service';
-// import { User } from '../interfaces/user.interface';
+import { decodeToken } from '../services/user-service';
 
-export async function authMiddleware(req: Request, res: Response) {
-  const authHeader = req.headers['authorization'];
-  console.log(authHeader);
-  
-  const token = authHeader && authHeader?.split(" ")[1]
- console.log(token);
- 
-  if (!token) { return res.sendStatus(401) }
-  
-  const user = await jwt.verify(token, process.env.TOKEN_SECRET)
-  // res.json({message: "entre"})
-  console.log(user);
+export async function authMiddleware (req ,res, next) {
+  try {
+    const authHeader = req.headers['authorization'];
+    console.log(authHeader);
+    
+    const token = authHeader && authHeader?.split(" ")[1]
+
+    const validToken: any = await decodeToken(token)
+    
+    if (!token || !validToken) { return res.sendStatus(401) }
+    req.body.userId = validToken.payload;
+    next();
+  } catch (error) {
+    res.sendStatus(401)
+    next();
+  }
   
 }
