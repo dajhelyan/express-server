@@ -2,8 +2,10 @@
 import { IUser, User } from '../interfaces/user.interface';
 import userModel from "../model/user-model";
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 import 'dotenv/config'
+
+// import { config } from 'dotenv';
 
 export interface IPayload {
   userId: string
@@ -27,7 +29,7 @@ export async function signIn(user: IUser) {
   console.log(existedUser, 'user');
 
   // desencryp password
-  const validInfo = await bcrypt.compare(user.password, existedUser?.password)
+  const validInfo = await bcrypt.compare(user.password, existedUser!.password)
 
   if(validInfo){ 
     const userToken = await generateToken(existedUser?.id)
@@ -40,6 +42,11 @@ export async function getUser(email: string) {
 }
 
 export async function generateToken(payload: any) {
-  return jwt.sign(payload, process.env.TOKEN_SECRET
-  )
+  return jwt.sign({payload}, process.env.TOKEN_SECRET!, {
+    expiresIn: "12h"
+  })
+}
+
+export async function decodeToken(token: any) {
+  return jwt.verify(token, process.env.TOKEN_SECRET!)
 }
