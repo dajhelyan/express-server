@@ -1,21 +1,36 @@
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
+  Navigate,
+  Outlet,
   Route,
-  Routes
-} from 'react-router-dom';import './App.css'
-import { LoginForm } from './pages/login-form';
-import { OrderForm } from './pages/order-form';
+  Routes,
+  redirect,
+} from "react-router-dom";
+import "./App.css";
+import { LoginForm } from "./pages/login-form";
+import { OrderForm } from "./pages/order-form";
+import { AuthProvider, useAuth } from "./authContext";
+
+function ProtectedRoute(params) {
+  const { user, isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    return <Navigate to={"/login"} replace />;
+  }
+  return <Outlet />;
+}
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<OrderForm/>}></Route>
-        <Route path="/login" element={<h1>login page</h1>}></Route>
-        <Route path="/orders" element={<h1>order page</h1>}></Route>
-      </Routes>
-    </Router>
-  )
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<LoginForm />}></Route>
+          <Route path="/login" element={<LoginForm />}></Route>
+          <Route path="/orders" element={<h1>order page</h1>}></Route>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
