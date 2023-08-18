@@ -22,17 +22,17 @@ const orderModel = new mongoose.Schema<Order>({
     type: Number,
     required: true
   },
-  // province: { 
-  //   type: String,
-  //   // required: true
-  // },
-  // district: { 
-  //   type: String,
-  //   // required: true
-  // },
+  province: { 
+    type: String,
+    required: true
+  },
+  district: { 
+    type: String,
+    required: true
+  },
   // reference: { 
   //   type: String,
-  //   // required: true
+  //   required: true
   // },
   company: {
     type: String,

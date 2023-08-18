@@ -5,8 +5,8 @@ export interface Order {
   dni: number,
   email: string,
   phoneNumber: number,
-  // province: string,
-  // district: string,
-  // reference: string,
+  province: string,
+  district: string,
+  reference: string,
   company: 'BBC' | 'IBK' | 'VABB' | 'SKOTI'
 }
