@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import { LoginForm } from "./pages/login-form";
-// import { OrderForm } from "./pages/order-form";
+import { OrderForm } from "./components/order-form";
 import { AuthProvider, useAuth } from "./authContext";
 import { Dashboard } from "./pages/dashboard";
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ function PublicRoute() {
   const navigate = useNavigate()
   const {isActive, isLoading} = useAuth()
 
- return isActive && !isLoading ? navigate('/' ,redirect) : <Outlet context={isActive}/> 
+ return isActive && !isLoading ? navigate('/' , redirect) : <Outlet context={isActive}/> 
 }
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Dashboard />}></Route>
-            <Route path="/orders" element={<Dashboard/>}></Route>
+            <Route path="/order" element={<OrderForm/>}></Route>
           </Route>
         </Routes>
       </AuthProvider>
