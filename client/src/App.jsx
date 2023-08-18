@@ -8,15 +8,28 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import { LoginForm } from "./pages/login-form";
-import { OrderForm } from "./pages/order-form";
+// import { OrderForm } from "./pages/order-form";
 import { AuthProvider, useAuth } from "./authContext";
+import { Dashboard } from "./pages/dashboard";
+import { useNavigate } from 'react-router-dom';
 
-function ProtectedRoute(params) {
-  const { user, isAuthenticated } = useAuth();
-  if (!isAuthenticated) {
-    return <Navigate to={"/login"} replace />;
+function ProtectedRoute() {
+  const { activeUser, isActive, isLoading } = useAuth();
+  
+  const navigate = useNavigate()
+
+  // console.log(isActive, "active?");
+  if (!isActive && isLoading) {
+    return navigate('/login', redirect)
   }
-  return <Outlet />;
+  return <Outlet context={isActive} />;
+}
+
+function PublicRoute() {
+  const navigate = useNavigate()
+  const {isActive, isLoading} = useAuth()
+
+ return isActive && !isLoading ? navigate('/' ,redirect) : <Outlet context={isActive}/> 
 }
 
 function App() {
@@ -24,9 +37,13 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<LoginForm />}></Route>
-          <Route path="/login" element={<LoginForm />}></Route>
-          <Route path="/orders" element={<h1>order page</h1>}></Route>
+          <Route element={<PublicRoute/>}>
+            <Route path="/login" element={<LoginForm/>}></Route>
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Dashboard />}></Route>
+            <Route path="/orders" element={<Dashboard/>}></Route>
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

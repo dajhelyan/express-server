@@ -1,25 +1,31 @@
 import { TextField, Button, Stack } from '@mui/material'
 import { useForm } from 'react-hook-form'
+import { useAuth } from '../authContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Form = () => {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      email: '',
-      password: ''
-      // select: {}
+  const { register, handleSubmit } = useForm();
+  const { userLoged, isActive } = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isActive) {
+      return navigate('/orders')
     }
-  });
-  const onSubmit = (data) => {
-    console.log(data);
+  }, [isActive])
+
+  const onSubmit = async (values) => {
+    const res = await userLoged(values)
+    return res
   }
 
   return (
     <>
-      <h1>Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2} width={400}>
-          <TextField label="Email" type='email'></TextField>
-          <TextField label="Password" type='password'></TextField>
+          <TextField {...register("email")} label="Correo" type='email' variant="filled"></TextField>
+          <TextField {...register("password")} label="Contraseña" type='password'variant="filled"></TextField>
           <Button type='submit' variant='contained' color='primary'>
             Iniciar Sesion
           </Button>
