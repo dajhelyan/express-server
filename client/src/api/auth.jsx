@@ -1,17 +1,17 @@
 import axios, { AxiosHeaders } from "axios";
 import { useAuth } from "../authContext";
 
-const API = "http://localhost:3000/api";
+export const API = "http://localhost:3000/api";
 // const { activeUser } = useAuth();
 
-const headers = axios.create({
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-    Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-    rossDomain: true,
-  },
-});
+// const headers = axios.create({
+//   headers: {
+//     "Content-Type": "application/x-www-form-urlencoded",
+//     Accept: "application/json",
+//     Authorization: `Bearer ${localStorage.getItem("token")}`,
+//     rossDomain: true,
+//   },
+// });
 
 // headers.interceptors.request.use(async(config) => {
 //   const value = await localStorage.getItem("token");
@@ -36,6 +36,20 @@ export const validateToken = (token) => {
 export const addOrder = async (order) => {
   try {
     await axios.post(`${API}/order`, order, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        crossDomain: true,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getOrder = async () => {
+  try {
+    await axios.get(`${API}/orders`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
