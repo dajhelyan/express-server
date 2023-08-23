@@ -16,7 +16,9 @@ import {
 
 import InboxIcon from "@mui/icons-material/Inbox";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+// const {pathname} = useLocation();
 
 const routeDetail = [
   {
@@ -34,6 +36,13 @@ const routeDetail = [
 ];
 
 export const Sidebar = () => {
+  // const [isSelected, setSelect] = useState(false)
+  const navigate = useNavigate();
+
+  // function handleSelectItem(e) {
+  //   navigate(e.path)
+  //   setSelect(true)
+  // }
 
   return (
     <Drawer
@@ -44,6 +53,7 @@ export const Sidebar = () => {
         keepMounted: false,
       }}
       open={true}
+      // selected={pathname === path}
     >
       <Container sx={{ padding: 3 }}>
         <Grid container spacing={4} sx={{ textAlign: "center" }}>
@@ -64,9 +74,12 @@ export const Sidebar = () => {
         {routeDetail.map((item, i) => {
           return (
             <ListItem
+            // onClick={(e) => {return e.preventDefault()}}
               disablePadding
             >
-              <ListItemButton key={i +1} to={item.path} selected={location.pathname === item.path} color="primary">
+              <ListItemButton  key={i +1} onClick={() => {
+                navigate(item.path)
+              }} selected={location.pathname === item.path} color="primary">
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
