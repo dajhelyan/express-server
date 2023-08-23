@@ -17,16 +17,17 @@ import { addOrder } from "../api/auth";
 import { useState } from "react";
 
 const company = ["IKB", "BBC", "VABB", "SKOTI"];
+
 export const OrderForm = () => {
   const { register, handleSubmit, onChange } = useForm();
-  const [select, setSelect] = useState('')
+  const [select, setSelect] = useState("");
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     console.log(data);
     // async function addTask(data) {
-      console.log(select, 's');
-      const res = await addOrder({...data, company: select})
-      console.log(res, 'res');
+    console.log(select, "s");
+    const res = await addOrder({ ...data, company: select });
+    console.log(res, "res");
     // }
   };
 
@@ -80,8 +81,10 @@ export const OrderForm = () => {
               <Select
                 value={select}
                 labelId="company-label"
-                id="company"                
-                onChange={(e) => {setSelect(e.target.value)}}
+                id="company"
+                onChange={(e) => {
+                  setSelect(e.target.value);
+                }}
                 input={<OutlinedInput label="Company" />}
               >
                 {company.map((company) => (
