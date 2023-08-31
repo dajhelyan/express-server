@@ -8,5 +8,6 @@ export interface Order {
   province: string,
   district: string,
   reference: string,
-  company: 'BBC' | 'IBK' | 'VABB' | 'SKOTI'
+  company: 'BBC' | 'IBK' | 'VABB' | 'SKOTI',
+  user: any
 }

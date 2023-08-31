@@ -38,7 +38,12 @@ const orderModel = new mongoose.Schema<Order>({
     type: String,
     enum: ['IKB', 'BBC', 'VABB', 'SKOTI'],
     required: true
-  }
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
 },{
   timestamps: true,
   versionKey: false
