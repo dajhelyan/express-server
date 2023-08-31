@@ -1,32 +1,67 @@
-import {Request, Response} from 'express'
+import { Request, Response } from "express";
 // import { handleHttpError } from '../utils/error.handler'
-import { insertOrder, getOrder } from '../services/order-service'
-import { errorHandler } from '../utils/error.handler'
+import {
+  insert,
+  getAll,
+  getById,
+  remove,
+  update,
+} from "../services/order-service";
+import { errorHandler } from "../utils/error.handler";
+import orderModel from "../model/order-model";
 
-export async function addOrder({body}: Request, res: Response){
-  const orderReq = await insertOrder(body)
+export async function addOrder(req: Request, res: Response, _next: any) {
+  const order = new orderModel({
+    ...req.body,
+    user: req.body.userId,
+  });
+  const orderReq = await insert(order);
+
   try {
-    res.send(orderReq)
+    res.send(orderReq);
   } catch (e) {
-    errorHandler(res, "Error creating the order.")
+    errorHandler(res, "Error creating the order.");
   }
 }
 
-export async function getOrders(_req: Request,res: Response) {
-  const getData = await getOrder()
+export async function getOrders(req: Request, res: Response) {
+  const getData = await getAll(req.body.userId);
+
   try {
-    res.send(getData)
+    if (req.body.userId) {
+      console.log(getData);
+
+      return res.json(getData);
+    }
   } catch (error) {
-    errorHandler(res, "Error getting order.")
+    res.status(402);
+    errorHandler(res, "Error getting order.");
   }
 }
 
-// function updateOrder(params:type) {
-  
-// }
+export async function getOrder(req: Request, res: Response) {
+  const order = await getById(req.params.id);
 
-// function deleteOrder(params:type) {
-  
-// }
+  try {
+    if (!order) return res.status(404).json;
+    if (req.body.userId) {
+      return res.json(order);
+    }
+  } catch (error) {
+    res.status(404);
+    errorHandler(res, "Error getting order.");
+  }
+}
 
+export async function updateOrder(req: Request, _res: Response) {
+  await update(req.params.id, req.body);
+}
 
+export async function deleteOrder(req: Request, res: Response) {
+  const order = await remove(req.params.id);
+  try {
+    if (!order) return res.status(404).json({ message: "Order not found" });
+  } catch (error) {
+    console.log(error);
+  }
+}
