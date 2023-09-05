@@ -36,45 +36,27 @@ const routeDetail = [
 ];
 
 export const Sidebar = () => {
-  // const [isSelected, setSelect] = useState(false)
   const navigate = useNavigate();
 
-  // function handleSelectItem(e) {
-  //   navigate(e.path)
-  //   setSelect(true)
-  // }
 
   return (
     <Drawer
-      component={Paper}
       color="primary"
       variant="permanent"
       ModalProps={{
         keepMounted: false,
       }}
       open={true}
-      // selected={pathname === path}
+      sx={{
+        width: 240,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' },
+      }}      // selected={pathname === path}
     >
-      <Container sx={{ padding: 3 }}>
-        <Grid container spacing={4} sx={{ textAlign: "center" }}>
-          <Grid item xs={12}>
-            <Avatar
-              alt="User Shoop"
-              src="/static/images/avatar/1.jpg"
-              sx={{ width: 65, height: 65, margin: "0 auto" }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h6">User Shoop</Typography>
-          </Grid>
-        </Grid>
-      </Container>
-      <Divider light />
       <List>
         {routeDetail.map((item, i) => {
           return (
             <ListItem
-            // onClick={(e) => {return e.preventDefault()}}
               disablePadding
             >
               <ListItemButton  key={i +1} onClick={() => {
