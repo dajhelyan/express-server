@@ -35,7 +35,7 @@ export const validateToken = (token) => {
 
 export const addOrder = async (order) => {
   try {
-    await axios.post(`${API}/order`, order, {
+    await axios.post(`${API}/orders`, order, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -47,7 +47,7 @@ export const addOrder = async (order) => {
   }
 };
 
-export const getOrder = async () => {
+export const getOrders = async () => {
   try {
     await axios.get(`${API}/orders`, {
       headers: {
