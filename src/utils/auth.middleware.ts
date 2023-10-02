@@ -3,8 +3,7 @@ import { decodeToken } from '../services/user-service';
 export async function authMiddleware (req ,res, next) {
   try {
     const authHeader = req.headers['authorization'];
-    console.log(authHeader);
-    
+
     const token = authHeader && authHeader?.split(" ")[1]
 
     const validToken: any = await decodeToken(token)
