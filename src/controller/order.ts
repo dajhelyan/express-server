@@ -8,17 +8,18 @@ import {
   update,
 } from "../services/order-service";
 import { errorHandler } from "../utils/error.handler";
-import orderModel from "../model/order-model";
+// import orderModel from "../model/order-model";
 
 export async function addOrder(req: Request, res: Response, _next: any) {
-  const order = new orderModel({
-    ...req.body,
-    user: req.body.userId,
-  });
-  const orderReq = await insert(order);
+  const orderData = {
+    ...req.body, 
+    user: req.body.userId
+  }
+  
+  const order = await insert(orderData);
 
   try {
-    res.send(orderReq);
+    res.send(order);
   } catch (e) {
     errorHandler(res, "Error creating the order.");
   }
@@ -29,7 +30,7 @@ export async function getOrders(req: Request, res: Response) {
 
   try {
     if (req.body.userId) {
-      console.log(getData);
+      console.log(getData, 'data');
 
       return res.json(getData);
     }
