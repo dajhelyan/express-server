@@ -5,17 +5,17 @@ import { authMiddleware } from '../utils/auth.middleware';
 // const authMiddleware = require('../utils/auth.middleware')
 const router = Router()
 
-// http:localhost:3000/order [POST]
-router.post("/orders", authMiddleware, addOrder)
+// http:localhost:3000/new-order [POST]
+router.post("/new-order", authMiddleware, addOrder)
 
 // http:localhost:3000/orders [GET]
 router.get("/orders", authMiddleware, getOrders)
 
-// http:localhost:3000/orders [PUT]
-router.put("/orders/:id", authMiddleware, updateOrder)
+// http:localhost:3000/edit-order [PUT]
+router.put("/edit-order/:id", authMiddleware, updateOrder)
 
-// http:localhost:3000/orders [GET]
-router.get("/orders/:id", authMiddleware, deleteOrder)
+// http:localhost:3000/remomve-order [GET]
+router.get("/remove-order/:id", authMiddleware, deleteOrder)
 
 // Login routes
 
